@@ -17,7 +17,7 @@ is_cloudy = True
 import math
 x=2.34
 y=1.45
-result = math.e**-y+(math.sin(2*x))/(math.cos (y**2))-12.1*math.log(x+y)
+result = math.e**-y+(math.sin((x))**2)/(math.cos (y**2))-12.1*math.log(x+y)
 print(result)
  
 
