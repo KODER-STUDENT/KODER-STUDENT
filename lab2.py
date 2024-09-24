@@ -1,37 +1,58 @@
-from math import  sqrt , cos ,  log as ln , sin
+from math import sqrt, fabs, log, cos, sin
 
-x = (input('Enter your x here:' , ))
-while not x.isdigit():
-   x = input('Please enter nteger, not string, try again:')
+# Введення початкових даних
+a = 1.0  # Початок інтервалу
+b = 10.0  # Кінець інтервалу
+h = 0.15  # Крок табулювання
 
-x = int(x)
+# Функція для обчислення значення f(x)
+def f(x):
+    if x < 3:
+        if x <= 0:
+            raise ValueError("x має бути більше 0 для обчислення log(x)")
+        return sqrt(x**3 + log(x))
+    elif 3 <= x < 6:
+        return fabs(log(x))**5
+    else:
+        return (cos(x))**x
 
-if x < 3:
-   print("x < 3")
-elif  3 <= x < 6:
-   print("3 <= x < 6")
-elif  x >= 3:
-   print("x >= 3")
+# Табулювання функції
+x = a
+print(f"Табулювання функції на інтервалі [{a}, {b}] з кроком {h}:")
+while x <= b:
+    try:
+        print(f"f({x:.2f}) = {f(x):.5f}")
+    except ValueError as e:
+        print(f"f({x:.2f}) = неможливо обчислити ({e})")
+    x += h
 
-print("sqrt(x4 + ln(x)) =", sqrt(x*4 + ln(x)))
-print("abs(ln(x))*5 =", abs(ln(x))*5)
-print("(cos(x))x =", cos(x)**x)
- 
+# Друга частина
+a = 0.0  # Початок інтервалу
+b = 1.0  # Кінець інтервалу
+h = 0.05  # Крок табулювання
+epsilon = 1e-5  # Похибка
 
-x = input('Enter your x here second time: ', )
+# Функція для обчислення значення f(x)
+def f(x):
+    sum_result = 0.0
+    n = 1
+    term = float('inf')  # Початковий доданок
+    max_iterations = 1000  # Максимальна кількість ітерацій
+    try:
+        while abs(term) > epsilon and n < max_iterations:  # Поки доданок більший за похибку
+            term = n * x**2 * sin(n * x)
+            sum_result += term
+            n += 1
+    except OverflowError as oe:
+        print(f"Переповнення на ітерації {n}: {oe}")
+    return x + sum_result
 
-while not x.isdigit():
-   x = input('Please enter nteger, not string, try again:')
-x = int(x)
-
-n = input('Enter your n here: ',)
-
-while not n.isdigit():
-   n = input('Please enter nteger, not string, try again:')
-
-n = int(n)
-
-sum_result = x
-for n in range(1, n + 1):
-    sum_result += n * x**2 * sin(n*x)
-print("sum_result:", sum_result)
+# Табулювання функції
+x = a
+print(f"Табулювання функції на інтервалі [{a}, {b}] з кроком {h}:")
+while x <= b:
+    try:
+        print(f"f({x:.2f}) = {f(x):.5f}")
+    except ValueError as e:
+        print(f"f({x:.2f}) = неможливо обчислити ({e})")
+    x += h
